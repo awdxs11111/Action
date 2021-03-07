@@ -290,6 +290,7 @@ async function all() {
         }
         //await jinbi_record() //收益记录
         if (CZ >= 10) {
+          for (let i = 0; i < 2; i++) {
             await help_index() //助力活动
             await home() //首页信息
             await zhuan_index() //任务列表
@@ -306,6 +307,7 @@ async function all() {
             await lotteryindex() //抽手机
             await cy_info() //答题
             await tixian_html() //提现
+          }
         }
 
 
@@ -1975,7 +1977,7 @@ function tixian_html(timeout = 0) {
 
 
 
-                        if (!day_tixian_tip && ($.user.wx_username != "" || $.user.is_weixin == 1)) {
+                        if ($.user.wx_username != "" || $.user.is_weixin == 1) {  //if (!day_tixian_tip && ($.user.wx_username != "" || $.user.is_weixin == 1)) {
 
                             if (CASH == 0.3 && $.user.money >= CASH && (jine1.cond == 0 || $.tixian_html.tixian_sign_day >= 3)) {
                                 await tixian() //提现

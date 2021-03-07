@@ -6,7 +6,7 @@ name: 18qmyd(全民悦动)
 on:
   workflow_dispatch:
   schedule:
-     - cron: '35 0,3-16,23 * * *'
+     - cron: '35 0,4-16/3,23 * * *'
   watch:
     types: started
 #env:
