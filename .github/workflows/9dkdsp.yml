@@ -1,0 +1,74 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 9dkdsp多看点视频
+
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: '0 1,7,15 * * *'
+  watch:
+    types: started
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    env:
+      Dkdhd: ${{ secrets.Dkdhd }}
+      Dkdbody: ${{ secrets.Dkdbody }}
+      Dkdvd_body: ${{ secrets.Dkdvd_body }}
+
+      Dkdhd2: ${{ secrets.Dkdhd2 }}
+      Dkdbody2: ${{ secrets.Dkdbody2 }}
+      Dkdvd_body2: ${{ secrets.Dkdvd_body2 }}
+
+      Dkdhd3: ${{ secrets.Dkdhd3 }}
+      Dkdbody3: ${{ secrets.Dkdbody3 }}
+      Dkdvd_body3: ${{ secrets.Dkdvd_body3 }}
+
+      Dkdhd4: ${{ secrets.Dkdhd4 }}
+      Dkdbody4: ${{ secrets.Dkdbody4 }}
+      Dkdvd_body4: ${{ secrets.Dkdvd_body4 }}
+
+      Dkdhd5: ${{ secrets.Dkdhd5 }}
+      Dkdbody5: ${{ secrets.Dkdbody5 }}
+      Dkdvd_body5: ${{ secrets.Dkdvd_body5 }}
+
+      Dkdhd6: ${{ secrets.Dkdhd6 }}
+      Dkdbody6: ${{ secrets.Dkdbody6 }}
+      Dkdvd_body6: ${{ secrets.Dkdvd_body6 }}
+
+      PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      BARK_PUSH: ${{ secrets.BARK_PUSH }}
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      TG_USER_ID: ${{ secrets.TG_USER_ID }}
+      BARK_SOUND: ${{ secrets.BARK_SOUND }}
+      DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+      DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+
+
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        run: |
+          git clone https://github.com/adw2s/Action.git ~/Scripts
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install
+        run: |
+          cd ~/Scripts
+          npm install -g npm
+          npm update
+
+      - name: '运行 【dkd视频1】'
+        run: |
+          cd ~/Scripts
+          node Task/9dkdsp.js
+        env:
+          Dkdhd: ${{ secrets.Dkdhd }}
+          Dkdbody: ${{ secrets.Dkdbody }}
+          Dkdvd_body: ${{ secrets.Dkdvd_body }}
