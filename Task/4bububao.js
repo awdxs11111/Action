@@ -70,8 +70,8 @@ $.message = '', COOKIES_SPLIT = '', CASH = '', ddtime = '';
 CZ = 10
 
 
-let max = 50;
-let min = 30;
+let max = 70;
+let min = 40;
 const bububaotokenArr = [];
 let bububaotokenVal = ``;
 let middlebububaoTOKEN = [];

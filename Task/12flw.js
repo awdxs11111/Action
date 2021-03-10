@@ -102,6 +102,9 @@ let middleflwHEADER = [];
 let middleflwspBODY = [];
 let middleflwqwBODY = [];
 let middleflwydBODY = [];
+
+let max = 70;
+let min = 40;
 // 没有设置 FL_CASH 则默认为 0 不提现
 if ($.isNode()) {
   CASH = process.env.FL_CASH || 0;
@@ -361,7 +364,7 @@ if (isGetCookie) {
 } else {
   !(async () => {
     await all();
-    await $.wait(500);
+    await $.wait(5000);
     await msgShow();
   })()
   .catch((e) => {
@@ -438,6 +441,9 @@ async function all() {
         await flwhbtx(); //天天领现金提现
       }
     }
+    random = Math.floor(Math.random()*(max-min+1)+min)*1000
+    console.log(random);
+    await $.wait(random);
     await flwtask(); //任务列表
     if ($.flwtask.data && qw.status == 0) {
       dd = qw.new_point / 2
@@ -447,14 +453,29 @@ async function all() {
     console.log(`📍本次运行等待${dd}秒`)
     if ($.flwtask.data && ms.status == 0) {
       await flwsign(); //签到
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
       await flwzrw(); //做任务
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
       await flwlrw(); //领任务
     }
     if ($.flwtask.data && sp.complete_count != 7) {
       await flwksp(); //看视频
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
       await flwlsp(); //领视频
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
     }
     if ($.flwtask.data && qw.status == 0) {
+    random = Math.floor(Math.random()*(max-min+1)+min)*1000
+    console.log(random);
+    await $.wait(random);
       await flwqw(); //趣味视频
     }
     await $.wait(dd * 1000);
@@ -487,7 +508,7 @@ if (ydBODY.length != 0 && yd && jrydb3==1200) {
 
 if (jrydb3!=1200){
             await read(); //刷阅读
-            await $.wait(tt * 1000)
+            await $.wait(tt * 3000)
 			 }
 
 

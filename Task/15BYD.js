@@ -18,8 +18,8 @@ const $ = new Env('BYD')
 const notify = $.isNode() ?require('./sendNotify') : '';
 let notice = ''
 let CookieVal = $.getdata('byd_ck')
-let max = 50;
-let min = 35;
+let max = 70;
+let min = 40;
 
 var  homeJinStr,homeJinStr,redBagStr,goltimestr,boxtimestr,goldEggStr,goldEggId,boxStr,boxtaskid,nonce_str,newsStr,luckyStr,luckyBoxStr,tip,H5ID,H5Str,H5TaskID
 var renwu,tasktaskid,taskclickStr,waterNum,waterSpStr,sleepStr,sleepId,box,noticemsg,signInStr

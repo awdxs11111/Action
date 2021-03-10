@@ -47,6 +47,8 @@ let dkdhd = $.getdata('dkdhd')
 let bodys = $.getdata("dkdvd_body");
 let hbmiss = 0
 
+let max = 70;
+let min = 40;
 const dkdhdArr = []
 const dkdbodyArr = []
 const bodysArr = []
@@ -140,6 +142,9 @@ const bodysArr = []
           $.index = $.index + 1;
           console.log(`\n开始多看点第${$.index}次视频💦`)
         }
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await AutoRead();
         await $.wait(6000);
       }

@@ -74,6 +74,8 @@ let dkdtxhd = $.getdata('dkdtxhd')
 let dkdvd_body = $.getdata('dkdvd_body')
 
 
+let max = 70;
+let min = 40;
 console.log('提现回执:失败🚫 ')
 const dkdurlArr = []
 const dkdhdArr = []
@@ -232,19 +234,46 @@ else {
         dkdtxurl = dkdtxurlArr[i];
         dkdtxhd = dkdtxhdArr[i];
         await dkdxx()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await dkdsc()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await dkdbx()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await dkdbxfb()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await dkdz()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await dkdsdjl()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await dkdyq()
         console.log("现在时间为",hour)
         if (hour <= 13 ){
           await dkdgg()
+          random = Math.floor(Math.random()*(max-min+1)+min)*1000
+          console.log(random);
+          await $.wait(random);
           await dkdfx()
           await dkdxs()
+          random = Math.floor(Math.random()*(max-min+1)+min)*1000
+          console.log(random);
+          await $.wait(random);
           await dkdqd()
           await dkdsxzp()
+          random = Math.floor(Math.random()*(max-min+1)+min)*1000
+          console.log(random);
+          await $.wait(random);
           await dkdcj()
         }
         if (hour >= 7 && hour <= 10 && txbody >= 3){

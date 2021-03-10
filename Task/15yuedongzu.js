@@ -63,8 +63,8 @@ const notifyInterval = 2; // 0为关闭通知，1为所有通知，2为12 23 点
 $.message = '', COOKIES_SPLIT = '', CASH = '', ddtime = '';
 CZ = 10
 
-let max = 50;
-let min = 30;
+let max = 70;
+let min = 4;
 
 const yuedongzutokenArr = [];
 let yuedongzutokenVal = ``;
@@ -359,9 +359,9 @@ function user(timeout = 0) {
                     }
                     if (!$.user.uid) {
                         $.msg(O, time(Number(tts())) + "❌❌❌COOKIE失效");
-                        if ($.isNode()) {
-                            notify.sendNotify(O, time(Number(tts())) + "❌❌❌COOKIE失效");
-                        }
+                        //if ($.isNode()) {
+                            //notify.sendNotify(O, time(Number(tts())) + "❌❌❌COOKIE失效");
+                        //}
                         resolve(false);
                     }
                 } catch (e) {

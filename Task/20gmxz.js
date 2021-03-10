@@ -1,77 +1,18 @@
 /*
-软件名称:悬赏喵喵 微信小程序
-更新时间：2021-03-04 @肥皂
-脚本说明：悬赏喵喵自动任务和喂养
-脚本为自动完成悬赏喵喵的视频任务
-试玩小程序任务和自动喂养
-一天可能一块钱左右，30金豆一元
-猫粮足够可能一天两块左右
-
-小程序二维码地址 https://raw.githubusercontent.com/age174/-/main/77D29956-8318-43D2-A7BC-0EF3E09F76AA.png
-微信扫描打开，保存临时码，再去扫码获取数据
-
-
-
-本脚本以学习为主！
-使用方法:
-打开悬赏喵喵小程序，获得悬赏喵喵的数据，
-如果不行请点击右上角三个点，重新进入小程序
-
-请在登录之后再获取数据，先别多账号，怕有ip限制，慢慢试，提现了再多账号
-数据获取必须要在首页获取的才有效
-
-
-TG电报群: https://t.me/hahaha802
-
-
-
-boxjs地址 :
-
-https://raw.githubusercontent.com/age174/-/main/feizao.box.json
-
-
-悬赏喵喵
-圈X配置如下，其他软件自行测试，定时可以多设置几次，没任务会停止运行的
-[task_local]
-#悬赏喵喵
-15 0,6,12,18, * * * https://raw.githubusercontent.com/age174/-/main/xsmm.js, tag=悬赏喵喵, img-url=https://raw.githubusercontent.com/erdongchanyo/icon/main/taskicon/Yunsaoma.png, enabled=true
-
-
-[rewrite_local]
-#悬赏喵喵
-https://vip.75787.com/app/index.php url script-request-header https://raw.githubusercontent.com/age174/-/main/xsmm.js
-
-
-
-#loon
-https://vip.75787.com/app/index.php script-path=https://raw.githubusercontent.com/age174/-/main/xsmm.js, requires-header=true, timeout=10, tag=悬赏喵喵
-
-
-
-#surge
-
-悬赏喵喵 = type=http-request,pattern=https://vip.75787.com/app/index.php,requires-header=1,max-size=0,script-path=https://raw.githubusercontent.com/age174/-/main/xsmm.js,script-update-interval=0
-
-
-
-
-[MITM]
-hostname = vip.75787.com
-
 
 */
 
 
-const $ = new Env('悬赏喵喵');
+const $ = new Env('mxz');
 let status;
-status = (status = ($.getval("xsmmstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
-let xsmmurlArr = [], xsmmhdArr = [],xsmmcount = ''
-let xsmmurl = $.getdata('xsmmurl')
-let xsmmhd = $.getdata('xsmmhd')
-let xsmmmc = '',xsmmid = '',xsmm1 = ''
-let xsmmhb = ($.getval('xsmmhb') || '12');  //兑换红包id，id 11 代表兑换0.3元，12代表兑换2元，13代表兑换20元，14代表兑换50元，这里可以自己手动修改兑换id。默认兑换id 11 也就是0.3元，兑换完了请修改id为12
-
-let xsmmdh = ($.getval('xsmmdh') || '15');  //提现id，14代表提现0.3元,15代表提现10元,16代表提现20元,17代表提现50元,18代表提现100元,19代表提现200元，模式提现id 14 提现0.3元，不想看广告想提现其他额度自己修改提现id运行脚本就可以
+status = (status = ($.getval("mxzstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
+let mxzurlArr = [], mxzhdArr = [],mxzcount = ''
+let mxzurl = $.getdata('mxzurl')
+let mxzhd = $.getdata('mxzhd')
+let mxzmc = '',mxzid = '',mxz1 = ''
+let mxzhb = ($.getval('mxzhb') || '1');  //兑换红包id，id 1 代表兑换10元，2代表兑换20元，3代表兑换50元，4代表兑换100元，这里可以自己手动修改兑换id。默认兑换id 11 也就是0.3元，兑换完了请修改id为12
+let mxzdh = ($.getval('mxzdh') || '1');  //提现id，14代表提现0.3元,15代表提现10元,16代表提现20元,17代表提现50元,18代表提现100元,19代表提现200元，模式提现id 14 提现0.3元，不想看广告想提现其他额度自己修改提现id运行脚本就可以
+var hour,minute,random
 
 let max = 60;
 let min = 35;
@@ -86,105 +27,105 @@ if ($.isNode()) {
 
 
 if ($.isNode()) {
-   if (process.env.xsmm_url && process.env.xsmm_url.indexOf('\n') > -1) {
-   xsmmurl = process.env.xsmm_url.split('\n');
+
+   if (process.env.mxz_url && process.env.mxz_url.indexOf('\n') > -1) {
+   mxzurl = process.env.mxz_url.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   xsmmurl = process.env.xsmm_url.split()
+   mxzurl = process.env.mxz_url.split()
   };
-  Object.keys(xsmmurl).forEach((item) => {
-        if (xsmmurl[item]) {
-          xsmmurlArr.push(xsmmurl[item])
+  Object.keys(mxzurl).forEach((item) => {
+        if (mxzurl[item]) {
+          mxzurlArr.push(mxzurl[item])
         }
     });
-  if (process.env.xsmm_hd && process.env.xsmm_hd.indexOf('\n') > -1) {
-   xsmmhd = process.env.xsmm_hd.split('\n');
+  if (process.env.mxz_hd && process.env.mxz_hd.indexOf('\n') > -1) {
+   mxzhd = process.env.mxz_hd.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   xsmmhd = process.env.xsmm_hd.split()
+   mxzhd = process.env.mxz_hd.split()
   };
-  Object.keys(xsmmhd).forEach((item) => {
-        if (xsmmhd[item]) {
-          xsmmhdArr.push(xsmmhd[item])
+  Object.keys(mxzhd).forEach((item) => {
+        if (mxzhd[item]) {
+          mxzhdArr.push(mxzhd[item])
         }
     });
 
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
- } else {xsmmurlArr.push($.getdata('xsmmurl'))
-    xsmmhdArr.push($.getdata('xsmmhd'))
-    let xsmmcount = ($.getval('xsmmcount') || '1');
-  for (let i = 2; i <= xsmmcount; i++) {
-    xsmmurlArr.push($.getdata(`xsmmurl${i}`))
-    xsmmhdArr.push($.getdata(`xsmmhd${i}`))
+ } else {mxzurlArr.push($.getdata('mxzurl'))
+    mxzhdArr.push($.getdata('mxzhd'))
+    let mxzcount = ($.getval('mxzcount') || '1');
+  for (let i = 2; i <= mxzcount; i++) {
+    mxzurlArr.push($.getdata(`mxzurl${i}`))
+    mxzhdArr.push($.getdata(`mxzhd${i}`))
   }
 }
 
 
 
 !(async () => {
-if (!xsmmhdArr[0]) {
+if (!mxzhdArr[0]) {
     $.msg($.name, '【提示】请先获取一cookie')
     return;
   }
-    console.log(`------------- 共${xsmmhdArr.length}个账号-------------\n`)
-    console.log('\n悬赏喵喵当前设置的兑换ID为: '+xsmmhb + '提现ID为: '+xsmmdh)
-      for (let i = 0; i < xsmmhdArr.length; i++) {
-        if (xsmmhdArr[i]) {
+    console.log(`------------- 共${mxzhdArr.length}个账号-------------\n`)
+    console.log('\n喵喵当前设置的兑换ID为: '+mxzhb + '提现ID为: '+mxzdh)
+      for (let i = 0; i < mxzhdArr.length; i++) {
+        if (mxzhdArr[i]) {
 
-          xsmmurl = xsmmurlArr[i];
-          xsmmhd = xsmmhdArr[i];
+          mxzurl = mxzurlArr[i];
+          mxzhd = mxzhdArr[i];
           $.index = i + 1;
-          console.log(`\n开始【悬赏喵喵${$.index}】`)
-          await xsmmsign();
-          await xsmmfood();
-          await xsmmlb();
-          await xsmmjg();
-          //await xsmmwy();
-          //await xsmmhb();
-          //await xsmmtx();
+          console.log(`\n开始【喵喵${$.index}】`)
+          await mxzsign();
+          await mxzfood();
+          await mxzlb();
+          await mxzjg();
+          //await zqmhhb();
+          //await zqmtx();
   }
 }
 
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
-//悬赏喵喵数据获取
+//喵喵数据获取
 
-function xsmmck() {
+function mxzck() {
    if ($request.url.indexOf("action=index") > -1) {
- const xsmmurl = $request.url
-  if(xsmmurl)     $.setdata(xsmmurl,`xsmmurl${status}`)
-    $.log(xsmmurl)
-  const xsmmhd = JSON.stringify($request.headers)
-        if(xsmmhd)    $.setdata(xsmmhd,`xsmmhd${status}`)
-$.log(xsmmhd)
-   $.msg($.name,"",'悬赏喵喵'+`${status}` +'获取数据获取成功！')
+ const mxzurl = $request.url
+  if(mxzurl)     $.setdata(mxzurl,`mxzurl${status}`)
+    $.log(mxzurl)
+  const mxzhd = JSON.stringify($request.headers)
+        if(mxzhd)    $.setdata(mxzhd,`mxzhd${status}`)
+$.log(mxzhd)
+   $.msg($.name,"",'喵喵'+`${status}` +'获取数据获取成功！')
   }
 }
 
 
 //喵喵签到
-function xsmmsign(timeout = 0) {
+function mxzsign(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=sign&contr=my&token='+xsmmurl.match(/token=(\w+)/)[1]+'&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=sign&contr=my&token='+mxzurl.match(/token=(\w+)/)[1]+'&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
-              //console.log('\n悬赏喵喵[签到]data回执:'+data)
+              //console.log('\n喵喵[签到]data回执:'+data)
               const result = JSON.parse(data)
                   if(result.status == 1){
-                  console.log('\n悬赏喵喵[签到]回执:成功🌝 \n连续签到: '+result.info.sign_days+' 天')
+                  console.log('\n喵喵[签到]回执:成功🌝 \n连续签到: '+result.info.sign_days+' 天')
                      //await $.wait(11000);
                      random = Math.floor(Math.random()*(max-min+1)+min)*1000
                      console.log(random);
                      await $.wait(random);
-                     await xsmmsigndouble();
+                     //await mxzsigndouble();
 
                   }else {
-                      console.log('\n悬赏喵喵[签到]回执:失败🚫'+result.info)
+                      console.log('\n喵喵[签到]回执:失败🚫'+result.info)
                   }
 
         } catch (e) {
@@ -197,21 +138,21 @@ let url = {
 }
 
 //喵喵签到翻倍
-function xsmmsigndouble(timeout = 0) {
+function mxzsigndouble(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=signDouble&contr=my&token='+xsmmurl.match(/token=(\w+)/)[1]+'&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=signDouble&contr=my&token='+mxzurl.match(/token=(\w+)/)[1]+'&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
-              //console.log('\n悬赏喵喵[签到翻倍]data回执:'+data)
+              //console.log('\n喵喵[签到翻倍]data回执:'+data)
               const result = JSON.parse(data)
                   if(result.status == 1){
-                  console.log('\n悬赏喵喵[签到翻倍]回执:成功🌝')
+                  console.log('\n喵喵[签到翻倍]回执:成功🌝')
                   }else {
 
-                      console.log('\n悬赏喵喵[签到翻倍]回执:失败🚫'+result.info)
+                      console.log('\n喵喵[签到翻倍]回执:失败🚫'+result.info)
                       /*random = Math.floor(Math.random()*(max-min+1)+min)*1000
                       console.log(random);
                       await $.wait(random);*/
@@ -226,26 +167,27 @@ let url = {
   })
 }
 
-//喵喵签到
-function xsmmfood(timeout = 0) {
+
+//喵喵食物
+function mxzfood(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=daily&contr=food&token='+xsmmurl.match(/token=(\w+)/)[1]+'&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=daily&contr=food&token='+mxzurl.match(/token=(\w+)/)[1]+'&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
-              //console.log('\n悬赏喵喵[领取食物]data回执:'+data)
+              //console.log('\n喵喵[领取食物]data回执:'+data)
               const result = JSON.parse(data)
                   if(result.status == 1){
-                  console.log('\n悬赏喵喵[领取食物]回执:成功🌝 \n')
+                  console.log('\n喵喵[领取食物]回执:成功🌝 \n')
                      //await $.wait(11000);
                      random = Math.floor(Math.random()*(max-min+1)+min)*1000
                      console.log(random);
                      await $.wait(random);
 
                   }else {
-                      console.log('\n悬赏喵喵[领取食物]回执:失败🚫'+result.info)
+                      console.log('\n喵喵[领取食物]回执:失败🚫'+result.info)
                   }
 
         } catch (e) {
@@ -257,34 +199,35 @@ let url = {
   })
 }
 
-//悬赏喵喵视频
-function xsmmsp(timeout = 0) {
+
+//喵喵视频
+function mxzsp(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=video&contr=food&token='+xsmmurl.match(/token=(\w+)/)[1]+'&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=video&contr=food&token='+mxzurl.match(/token=(\w+)/)[1]+'&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
+              //console.log('\n喵喵[领取视频奖励]data回执:'+data)
+              const result = JSON.parse(data)
+                  if(result.status == 1){
+                  console.log('\n喵喵[领取视频奖励]回执:成功🌝 \n获得视频奖励: '+result.info.video_currency+' 猫粮')
+                     //await $.wait(11000);
+                     random = Math.floor(Math.random()*(max-min+1)+min)*1000
+                     console.log(random);
+                     await $.wait(random);
+                     await $.wait(80000);
+                     await mxzsp();
 
-    const result = JSON.parse(data)
-        if(result.status == 1){
-        console.log('\n悬赏喵喵[领取视频奖励]回执:成功🌝 \n获得视频奖励: '+result.info.video_currency+' 猫粮')
-           //await $.wait(11000);
-           random = Math.floor(Math.random()*(max-min+1)+min)*1000
-           console.log(random);
-           await $.wait(random);
-           await xsmmsp();
+                  }else {
 
-
-} else {
-
-console.log('\n悬赏喵喵[领取视频奖励]回执:失败🚫当前无任务\n前去喂养悬赏喵喵🐱')
-random = Math.floor(Math.random()*(max-min+1)+min)*1000
-console.log(random);
-await $.wait(random);
-      await xsmmwy();
-}
+                      console.log('\n喵喵[领取视频奖励]回执:失败🚫当前无任务\n前去喂养喵喵🐱')
+                      /*random = Math.floor(Math.random()*(max-min+1)+min)*1000
+                      console.log(random);
+                      await $.wait(random);*/
+                            await mxzwy();
+                  }
 
         } catch (e) {
           //$.logErr(e, resp);
@@ -295,32 +238,34 @@ await $.wait(random);
   })
 }
 
-//悬赏喵喵任务
-function xsmmrw(timeout = 0) {
+//喵喵任务
+function mxzrw(timeout = 0) {
   return new Promise((resolve) => {
 
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=complete&contr=task&task_id='+xsmmid+'&token='+xsmmurl.match(/token=(\w+)/)[1]+'&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=complete&contr=task&task_id='+mxzid+'&token='+mxzurl.match(/token=(\w+)/)[1]+'&version=2.0.27',
+        headers : JSON.parse(mxzhd),
 
 }
       $.get(url, async (err, resp, data) => {
         try {
+        console.log(`\n喵喵[试玩小程序任务]回执:`+data)
          const result = JSON.parse(data)
-        if (result.status == 1) {
-          console.log(`\n悬赏喵喵[试玩小程序任务]回执:成功🌝\n`+result.info.msg)
-     //await $.wait(2000);
-     random = Math.floor(Math.random()*(max-min+1)+min)*1000
-     console.log(random);
-     await $.wait(random);
-     await xsmmlb();
-        } else {
+                if (result.status == 1) {
+                     console.log(`\n喵喵[试玩小程序任务]回执:成功🌝\n`+result.info.msg)
+                     //await $.wait(2000);
+                     random = Math.floor(Math.random()*(max-min+1)+min)*1000
+                     console.log(random);
+                     await $.wait(random);
+                     await mxzlb();
+                } else {
 
-    //const result = JSON.parse(data)
-       console.log('\n悬赏喵喵[试玩小程序任务]回执:失败🚫')
+                    //const result = JSON.parse(data)
+                      console.log('\n喵喵[试玩小程序任务]回执:失败🚫')
 
 
-        }} catch (e) {
+                }
+      } catch (e) {
           //$.logErr(e, resp);
         } finally {
           resolve()
@@ -330,45 +275,46 @@ let url = {
 }
 
 
-//悬赏喵喵列表
-function xsmmlb(timeout = 0) {
+//喵喵列表
+function mxzlb(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : xsmmurl,
-        headers : JSON.parse(xsmmhd),
+        url : mxzurl,
+        headers : JSON.parse(mxzhd),
 
 }
       $.get(url, async (err, resp, data) => {
         try {
+          //console.log('喵喵[获取任务列表]回执:'+data)
+          if(data.match(/"s":(.*?),/)[1] === '[]'){
+          console.log('\n喵喵当前没有小程序任务了,前去执行视频任务')
+          /*random = Math.floor(Math.random()*(max-min+1)+min)*1000
+          console.log(random);
+          await $.wait(random);*/
+          await mxzsp();
+          }
+          const result = JSON.parse(data)
+            console.log('喵喵[获取任务列表]result回执:'+result)
+                if(result.status == 1){
+                   //console.log(data)
+                    mxzid = data.match(/"id":"(\w+)",/)[1]
+                    mxzmc = data.match(/"title":"(.+?)",/)[1]
 
-if(data.match(/"s":(.*?),/)[1] === '[]'){
-console.log('\n悬赏喵喵当前没有小程序任务了,前去执行视频任务')
-random = Math.floor(Math.random()*(max-min+1)+min)*1000
-console.log(random);
-await $.wait(random);
-await xsmmsp();
-}
-    const result = JSON.parse(data)
-        if(result.status == 1){
-     //console.log(data)
-      xsmmid = data.match(/"id":"(\w+)",/)[1]
-      xsmmmc = data.match(/"title":"(.+?)",/)[1]
+                      console.log('\n喵喵[获取任务列表]回执:成功🌝  \n[任务ID]: '+mxzid+' \n[任务名称]: '+mxzmc+'\n开始领取任务奖励')
+                   //$.done()
+                     //await $.wait(2000);
+                     random = Math.floor(Math.random()*(max-min+1)+min)*1000
+                     console.log(random);
+                     await $.wait(random);
+                     await mxzrw();
 
-        console.log('\n悬赏喵喵[获取任务列表]回执:成功🌝  \n[任务ID]: '+xsmmid+' \n[任务名称]: '+xsmmmc+'\n开始领取任务奖励')
-     //$.done()
-       //await $.wait(2000);
-       random = Math.floor(Math.random()*(max-min+1)+min)*1000
-       console.log(random);
-       await $.wait(random);
-        await xsmmrw();
-
-} else {
-console.log('悬赏喵喵[获取任务列表]回执:失败🚫 当前账号可能没有任务了')
-random = Math.floor(Math.random()*(max-min+1)+min)*1000
-console.log(random);
-await $.wait(random);
-     await xsmmsp();
-}
+                } else {
+                      console.log('喵喵[获取任务列表]回执:失败🚫 当前账号可能没有任务了')
+                      /*random = Math.floor(Math.random()*(max-min+1)+min)*1000
+                      console.log(random);
+                      await $.wait(random);*/
+                      await mxzsp();
+                }
         } catch (e) {
           //$.logErr(e, resp);
         } finally {
@@ -379,22 +325,22 @@ await $.wait(random);
 }
 
 
-//悬赏喵喵喂养
-function xsmmwy(timeout = 0) {
+//喵喵喂养
+function mxzwy(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=feed&contr=my&token='+xsmmurl.match(/token=(\w+)/)[1]+'&is_remind=2&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=feed&contr=my&token='+mxzurl.match(/token=(\w+)/)[1]+'&is_remind=2&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
-
+    //console.log('\n喵喵[喂养]data回执:'+data)
     const result = JSON.parse(data)
         if(result.status == 1){
-        console.log('\n悬赏喵喵[喂养]回执:成功🌝 \n成功添加喂养进度'+result.info.percentage+'%\n当前金豆余额:'+result.info.member.currency+' 个\n猫粮剩余:'+result.info.member.foodstuff)
+        console.log('\n喵喵[喂养]回执:成功🌝 \n成功添加喂养进度'+result.info.percentage+'%\n当前金豆余额:'+result.info.member.currency+' 个\n猫粮剩余:'+result.info.member.foodstuff)
 
 } else {
-       console.log('\n悬赏喵喵[喂养]回执:失败🚫 '+result.info)
+       console.log('\n喵喵[喂养]回执:失败🚫 '+result.info)
 
 
 }
@@ -407,27 +353,20 @@ let url = {
     },timeout)
   })
 }
-
 
 //喵喵进贡
-function xsmmjg(timeout = 0) {
+function mxzjg(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=upcurrency&contr=my&token='+xsmmurl.match(/token=(\w+)/)[1]+'&collect=1&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=upcurrency&contr=my&token='+mxzurl.match(/token=(\w+)/)[1]+'&is_remind=2&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
     //console.log('\n喵喵[进贡]data回执:'+data)
     const result = JSON.parse(data)
         if(result.status == 1){
-                console.log('\n喵喵[进贡]回执:成功🌝 \n成功收取进贡'+result.info.collect_currency+'金豆')
-                var coin = result.info.member.currency
-                console.log('\n🌝现有猫币:'+coin+'个')
-                if (coin > 200){
-                    await xsmmhhb();
-                    await xsmmtx();
-                }
+        console.log('\n喵喵[进贡]回执:成功🌝 \n成功收取进贡'+result.info.collect_currency+'金豆')
 
         } else {
                console.log('\n喵喵[进贡]回执:失败🚫 '+result.info)
@@ -444,24 +383,22 @@ let url = {
   })
 }
 
-//悬赏喵喵兑换
-function xsmmhhb(timeout = 0) {
+//喵喵兑换
+function mxzhhb(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php?i=61&t=0&v=2.0.32&from=wxapp&c=entry&a=wxapp&do=exchange&m=bh_cat&sign=79926608a360d256e0ceee140f6ada8f&token='+xsmmurl.match(/token=(\w+)/)[1]+'&id='+xsmmhb+'&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=index&token='+mxzurl.match(/token=(\w+)/)[1]+'&id='+mxzhb+'&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
-
-    const result = JSON.parse(data)
-        if(result.status == 1){
-       console.log('悬赏喵喵成功兑换红包,前往提现')
-
-
-} else {
-       $.msg('悬赏喵喵兑换红包','','悬赏喵喵兑换红包回执:失败🚫 '+result.info+'如果当前兑换额度没有机会了请修改兑换id')
-}
+              //console.log('喵喵成功兑换红包data：'+data)
+              const result = JSON.parse(data)
+                  if(result.status == 1){
+                        console.log('喵喵成功兑换红包,前往提现')
+                  } else {
+                         $.msg('喵喵兑换红包','','喵喵兑换红包回执:失败🚫 '+result.info+'如果当前兑换额度没有机会了请修改兑换id')
+                  }
 
         } catch (e) {
           //$.logErr(e, resp);
@@ -472,24 +409,23 @@ let url = {
   })
 }
 
-
-//悬赏喵喵提现
-function xsmmtx(timeout = 0) {
+//喵喵提现
+function mxztx(timeout = 0) {
   return new Promise((resolve) => {
 let url = {
-        url : 'https://vip.75787.com/app/index.php'+xsmmurl.match(/index.php(.*?)action/)[1]+'&action=withdrawals&contr=my&token='+xsmmurl.match(/token=(\w+)/)[1]+'&money_id='+xsmmdh+'&payment_code=&pwd=&version=2.0.32',
-        headers : JSON.parse(xsmmhd),
+        url : 'https://x.zz789.cn/app/index.php'+mxzurl.match(/index.php(.*?)action/)[1]+'&action=withdrawals&contr=my&token='+mxzurl.match(/token=(\w+)/)[1]+'&money_id='+mxzdh+'&payment_code=&pwd=&version=2.0.27',
+        headers : JSON.parse(mxzhd),
         }
       $.get(url, async (err, resp, data) => {
         try {
-    //console.log('\n悬赏喵喵[提现]回执:'+data)
-    const result = JSON.parse(data)
-        if(result.status == 1){
-        $.msg('悬赏喵喵提现','','悬赏喵喵成功提现至微信10元')
+            //console.log('\n喵喵[提现]data回执:'+data)
+            const result = JSON.parse(data)
+            if(result.status == 1){
+                  $.msg('喵喵提现','','喵喵成功提现至微信0.3元')
 
-} else {
-       console.log('\n悬赏喵喵[提现]回执:失败🚫 '+result.info)
-}
+            } else {
+                   console.log('\n喵喵[提现]回执:失败🚫 '+result.info)
+            }
 
         } catch (e) {
           //$.logErr(e, resp);
@@ -499,6 +435,7 @@ let url = {
     },timeout)
   })
 }
+
 
 
 

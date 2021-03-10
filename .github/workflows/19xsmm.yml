@@ -6,7 +6,7 @@ name: 19xsmm(悬赏喵喵)
 on:
   workflow_dispatch:
   schedule:
-     - cron: '35 0,3-16/3,23 * * *'
+     - cron: '35 0,3-23/3 * * *'
   watch:
     types: started
 #env:

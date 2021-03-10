@@ -11,6 +11,8 @@ const notifyInterval = 1;
 let tz = '';
 let version = $.getval('version') || "1.5.1"; //APP版本号,更新请到APP更改
 
+let max = 30;
+let min = 15;
 //////////////////////////////////////////////////////////////////
 //hour&min
 var hour = '';
@@ -128,35 +130,50 @@ async function showmsg2() {
 }
 //////////////////////////////////////////////////////////////////
 async function runstepapp() {
+  random = Math.floor(Math.random()*(max-min+1)+min)*1000
+  console.log(random);
+  await $.wait(random);
   console.log(`\n🇨🇳【开始首页签到任务】`)
   await index();
+  random = Math.floor(Math.random()*(max-min+1)+min)*1000
+  console.log(random);
+  await $.wait(random);
   console.log(`\n🇨🇳【开始赚步数任务】`)
   await steptomoney();
   await getharvest();
   //console.log(`\n🇨🇳【开始福利中心任务】`)
   //await center();
+  random = Math.floor(Math.random()*(max-min+1)+min)*1000
+  console.log(random);
+  await $.wait(random);
   console.log(`\n1️⃣开始🎡幸运转盘🎡任务`)
   //await advlist();
   await wheelindex()
+  random = Math.floor(Math.random()*(max-min+1)+min)*1000
+  console.log(random);
+  await $.wait(random);
   console.log(`\n2️⃣开始🤘摇一摇🤘任务`)
   await shakeindex();
+  random = Math.floor(Math.random()*(max-min+1)+min)*1000
+  console.log(random);
+  await $.wait(random);
   console.log(`\n3️⃣开始🎫刮一刮🎫任务`)
   await gglindex();
 
   await runstepend();
-  console.log(`\n🇨🇳【开始提现任务】`)
-  console.log(`👧请使用专门的提现脚本,每天提现0.3元`)
+  //console.log(`\n🇨🇳【开始提现任务】`)
+  //console.log(`👧请使用专门的提现脚本,每天提现0.3元`)
 
 }
 ///////////////////////////【收尾】//////////////////////////////////
 async function runstepend(){
   if(wheeltotalnum >= 7 && shaketotalnum >= 7 && ggltotalnum >= 20){
     console.log(`\n🔂开始🔥燃尽模式🔥任务`)
-    await $.wait(8000)
+    await $.wait(18000)
     await wheelincr();
-    await $.wait(8000)
+    await $.wait(18000)
     await shakeincr();
-    await $.wait(8000)
+    await $.wait(18000)
     await gglincr();
   }
 }

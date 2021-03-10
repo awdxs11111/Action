@@ -39,6 +39,12 @@ let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
 let cash = ($.getval('rlcash') || '1')//默认不自动提现
 const invite=0;//新用户自动邀请，0关闭，1默认开启
 const logs =0;//0为关闭日志，1为开启
+
+let max = 70;
+let min = 40;
+
+
+
 var hour=''
 var minute=''
 if ($.isNode()) {
@@ -135,10 +141,19 @@ if (!rlheaderArr[0]) {
       $.index = i + 1;
       console.log(`\n开始【燃旅视频${$.index}】`)
       await checkVersion()
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
       await index()
       await task_center()
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
       await myVotes()
       await wiTask()
+      random = Math.floor(Math.random()*(max-min+1)+min)*1000
+      console.log(random);
+      await $.wait(random);
       await userinfo()
       await showmsg()
 
@@ -241,6 +256,9 @@ let headers = rlheader.replace(/acw_tc=\w+/,'')
           if(Number(result.user.balance) > 10 ){cash = 10}
           else if(Number(result.user.balance) > 3 ){cash = 3}
           else{cash = 1}
+          random = Math.floor(Math.random()*(max-min+1)+min)*1000
+          console.log(random);
+          await $.wait(random);
           await wallet()
         }
         }else{
@@ -279,21 +297,33 @@ let headers = rlheader.replace(/acw_tc=\w+/,'')
         console.log('分享红包：'+shareArr.to_num+'/'+shareArr.num)
         let rankArr = result.data.task.find(item => item.id === 11)
         console.log('榜单红包：'+rankArr.to_num+'/'+rankArr.num)
-        if(rankArr.to_num < rankArr.to_num){
+        if(rankArr.to_num != rankArr.num){
         show = 0;
         }
-        if(rankArr.to_num >= rankArr.to_num){
+        if(rankArr.to_num == rankArr.num){
         show = 1;
         }
         if(shareArr.to_num < shareArr.num){
         await share()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await video_info()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await wxfx()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await share_rewards()
         }
         let videoArr = result.data.task.find(item => item.id === 7)
         console.log('视频任务：'+videoArr.to_num+'/'+videoArr.num)
         if(luckyArr.to_num < luckyArr.num || videoArr.to_num < videoArr.num){
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await video_reward()
         }
         message += '邀请人数：'+inviteArr.to_num+'\n'+'幸运红包：'+luckyArr.to_num+'/'+luckyArr.num+'\n'+'分享红包：'+shareArr.to_num+'/'+shareArr.num+'\n'+'视频任务：'+videoArr.to_num+'/'+videoArr.num+'\n'
@@ -602,16 +632,31 @@ let new_access_token = access_token.replace(/access_token=/,'')
         let lottery_num = result.data.rate
         if(result.data.votes > 0){
         if(show == 0){
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await mySupport()
         }
         if(show == 1){
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await getRank()
         }
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await goVote()
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await vote_rewards()
         }
         if(lottery_num > 0){
         //for(let i = 0; i < lottery_num; i++){
+        random = Math.floor(Math.random()*(max-min+1)+min)*1000
+        console.log(random);
+        await $.wait(random);
         await lottery()
         //}
         }

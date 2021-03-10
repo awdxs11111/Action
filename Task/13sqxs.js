@@ -222,7 +222,7 @@ function readbook() {
 		{
 			ReadTimes++;
 			$.log("【阅读任务】第"+ReadTimes+"次阅读成功，获得3金币");
-			await $.wait(8500);
+			await $.wait(9500);
 			await readbook();
 		}
 		 else
@@ -289,7 +289,7 @@ function vediogoldprize(j) {
 			j++;
 			$.log("【视频金币】观看第"+j+"个视频成功，获得250金币，等待30s观看下一个视频");
 			vediogold+=250;
-			await $.wait(30000);
+			await $.wait(38000);
 			await vediogoldprize(j);
 		}
 		 else
@@ -324,7 +324,7 @@ function vediodrawprize(k) {
 		{
 			k++;
 			$.log("【视频抽奖】观看第"+k+"个视频成功，获得一次抽奖机会");
-			await $.wait(5000);
+			await $.wait(12000);
 			await draw(k);
 		}
 		 else
@@ -357,7 +357,7 @@ function draw(k) {
 		{
 			$.log("【抽奖任务】抽奖成功，获得"+result.data.prizeList[0].prizeName);
 			drawgold+=parseInt(result.data.prizeList[0].prizeName);
-			await $.wait(5000);
+			await $.wait(11000);
 			await vediodrawprize(k);
 		}
 		 else
